@@ -2,75 +2,10 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { calcWinner, emptySpaces } from "./helper.js";
+import { Status } from "./components/Status";
+import { Board } from "./components/Board";
+import { Restart } from "./components/Restart";
 // import "reset-css";
-
-function Square({ value, onClick }) {
-  return (
-    <button className="square" onClick={onClick}>
-      {value}
-    </button>
-  );
-}
-
-function Status({ winner, next, draw }) {
-  const gameStatus = function () {
-    if (winner) return `Winner is player ${winner} 🎊`;
-    if (draw) return "DRAW!";
-    return `Next Player : ${next}`;
-  };
-  return <div className="status">{gameStatus()}</div>;
-}
-
-function Board({
-  nextPlayer,
-  winner,
-  squares,
-  setSquares,
-  xIsNext,
-  setXIsNext,
-}) {
-  const renderSquare = function (i) {
-    return <Square value={squares[i]} onClick={() => handleTurns(i)} />;
-  };
-
-  const handleTurns = function (i) {
-    const newSquares = [...squares];
-    if (newSquares[i] !== null || winner) return;
-    newSquares[i] = nextPlayer;
-    setSquares(newSquares);
-    setXIsNext(!xIsNext);
-  };
-
-  return (
-    <div>
-      <div className="board-row">
-        {renderSquare(0)}
-        {renderSquare(1)}
-        {renderSquare(2)}
-      </div>
-      <div className="board-row">
-        {renderSquare(3)}
-        {renderSquare(4)}
-        {renderSquare(5)}
-      </div>
-      <div className="board-row">
-        {renderSquare(6)}
-        {renderSquare(7)}
-        {renderSquare(8)}
-      </div>
-    </div>
-  );
-}
-
-function Restart({ reset }) {
-  return (
-    <>
-      <button className="restart" onClick={() => reset()}>
-        Restart
-      </button>
-    </>
-  );
-}
 
 function Game() {
   const initialBoard = Array(9).fill(null);
